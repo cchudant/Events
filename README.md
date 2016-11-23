@@ -1,7 +1,7 @@
 #Listening an event
 
 You can create a simple listener like that:
-```
+```java
 public class MyListener implements Listener {
     
     @EventHandler
@@ -14,12 +14,12 @@ The method name does not matter.
 Don't forget the `@EventHandler` annotation!
 
 You add parameters to the `@EventHandler` annotation like this:
-```
+```java
 @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 ```
 
 Then, all you need is to register the listener to the EventManager:
-```
+```java
 EventManager.registerListener(new MyListener());
 ```
 You can add multiple listener methods per listener.
@@ -29,7 +29,7 @@ You can add multiple listener methods per listener.
 To create an event, you simply need to create a class which extends Event.
 Here is an exemple:
 
-```
+```java
 public class ChatEvent extends Event {
     private String chatted;
 
@@ -43,14 +43,14 @@ public class ChatEvent extends Event {
 }
 ```
 Then, to call the event, just do this:
-```
+```java
 EventManager.callEvent(new ChatEvent("Hi!"));
 ```
 The event will be dispatched between the listeners, the higher priority the sooner.
 Then, the event will be dispatched between the listeners listening the parents of the Event.
 
 So both these methods will fire, but method1 will be called sooner.
-```
+```java
 @EventHandler
 public void method1(ChatEvent event) {
 }
@@ -63,7 +63,7 @@ public void method2(Event event) {
 #Cancellable event
 
 You can create cancellable events like this:
-```
+```java
 public class MyCancellableEvent extends Event implements Cancellable {
     private boolean cancel;
 
@@ -79,21 +79,21 @@ public class MyCancellableEvent extends Event implements Cancellable {
 }
 ```
 Then all the listeners can cancel it:
-```
+```java
 @EventHandler
 public void listen(MyCancellableEvent event) {
 	event.setCancellable(true);
 }
 ```
 If an event is cancelled, then the listeners cannot listen to it, except if they ignoreCancelled: 
-```
+```java
 @EventHandler(ignoreCancelled = true)
 public void thisIgnoreCancelled(MyCancellableEvent event) {
 	event.setCancellable(true);
 }
 ```
 If a listener use the `MONITOR` priority, the listener cannot cancel the event.
-```
+```java
 @EventHandler(priority = EventPriority.MONITOR)
 public void thisIgnoreCancelled(MyCancellableEvent event) {
 	event.setCancellable(true); // This will not throw any exception, but this will not work.
