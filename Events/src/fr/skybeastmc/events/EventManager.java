@@ -65,7 +65,7 @@ public final class EventManager {
 
 	    if (parameters.length != 1 // The method need ONE parameter
 		    || !Event.class.isAssignableFrom(parameters[0])) // And the parameter need to be an Event
-		return;
+		continue;
 	    
 	    LISTENERS.get(parameters[0]).remove(method); // Remove the method
 	}

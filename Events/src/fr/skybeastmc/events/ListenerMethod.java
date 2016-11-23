@@ -33,7 +33,6 @@ class ListenerMethod {
     @SuppressWarnings("unchecked") // Class<?> -> Class<? extends Event> -- Safe
     public static ListenerMethod of(@Nullable Method method, @NonNull Listener parent) {
 	if (method == null // The method is not null
-		|| !method.isAccessible() // The method is accessible (not private / ...)
 		|| method.getReturnType() != void.class) // The method has no return type (void)
 	    return null;
 
